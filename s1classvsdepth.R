@@ -1,3 +1,4 @@
+library(dplyr)
 library(gdata)
 library(ggplot2)
 
@@ -6,29 +7,121 @@ data1011 <- file.path("/Volumes/HD/Users/MoritzSchmid-Takuvik/Documents/Work/Pro
 # Read in XLS data and rename headers for ease of access
 jdata = read.xls(data1011, pattern="RunNo")    # Header line using pattern
 
-jdata1 = jdata[c(1:9424), c(1:4,7,38)]
-names(jdata1) = c('RunNo', 'prediction' , 'length_pred','width_pred','Area_mm','depth')
+jdata1 <- tbl_df(jdata) #more handable table of dplyr
 
-c1<-as.numeric(jdata1$prediction)
-jdata1$pred2<-c1
-#c2<-c1==31
-#c3<-c1==17
-#c4<-c1==29
+jdata2 = jdata1[c(1:9424), c(1:4,7,38,39,41,42,43,45,46)] #which columns and rows to take
+names(jdata2) = c('runno', 'prediction' , 'length_pred','width_pred','area_mm','depth','salinity','oxy_concentration','temperature(oxy)','oxy_saturation','Fluorescence(0-200)','Fluorescence(0-20)') #header names
 
-"c3<-jdata1$prediction=='ChypIVantF_dors'
-c4<-jdata1$prediction=='ChypIVdorsEX'
-c5<-jdata1$prediction=='ChypIVlat'"
+allcglac4<-filter(jdata2,prediction %in% c("CglacIVdors","CglacIVlat"))
+allcglac4$pred<-c("Calanus glacialis stage 4")
 
-#c5<-c(c2|c3|c4)
+allcglac5<-filter(jdata2,prediction %in% c("CglacVdors","CglacVdorsex","CglacVlat"))
+allcglac5$pred<-c("Calanus glacialis stage 5")
+
+allcglacf<-filter(jdata2,prediction %in% c("CglacFdorsL","CglacFdorsS","CglacFlat"))
+allcglacf$pred<-c("Calanus glacialis female")
+
+allchyp4<-filter(jdata2,prediction %in% c("ChypIVantF_dors" ,"ChypIVdorsEX" ,"ChypIVlat"))
+allchyp4$pred<-c("Calanus hyperboreus stage 4")
+
+allchyp5<-filter(jdata2,prediction %in% c("ChypVdors" ,"ChypVdorsext","ChypVlat"))
+allchyp5$pred<-c("Calanus hyperboreus stage 5")
+
+allchypf<-filter(jdata2,prediction %in% c("ChypFdors" ,"ChypFdorsEXT","ChypFlat"))
+allchypf$pred<-c("Calanus hyperboreus female")
+
+allcyctrico<-filter(jdata2,prediction %in% c("CycTricoDORS" ,"CycTricoLAT","CycTricoMF"))
+allcyctrico$pred<-c("Triconia sp.")
+
+alleggs<-filter(jdata2,prediction %in% c("Egg"))
+alleggs$pred<-c("Eggs")
+
+allmicroc<-filter(jdata2,prediction %in% c("MicroCdors","MicroClat"))
+allmicroc$pred<-c("Microcalanus sp.")
+
+allmlong4<-filter(jdata2,prediction %in% c("MlongaIVlat","MlongIVdors"))
+allmlong4$pred<-c("Metridia longa stage 4")
+
+allmlong5<-filter(jdata2,prediction %in% c("MlongVdors","MlongVlat"))
+allmlong5$pred<-c("Metridia longa stage 5")
+
+allmlongf<-filter(jdata2,prediction %in% c("MlongFdors","MlongFdorsEx","MlongFlat"))
+allmlongf$pred<-c("Metridia longa female")
+
+allnauplius<-filter(jdata2,prediction %in% c("Nauplius"))
+allnauplius$pred<-c("Nauplii")
+
+alloithona<-filter(jdata2,prediction %in% c("Oithona"))
+alloithona$pred<-c("Oithona sp.")
+
+allpseudo4<-filter(jdata2,prediction %in% c("PseudoIVlat"))
+allpseudo4$pred<-c("Pseudocalanus sp. stage 4")
+
+allpseudo5<-filter(jdata2,prediction %in% c("PseudoVdors","PseudoVlat"))
+allpseudo5$pred<-c("Pseudocalanus sp. stage 5")
+
+allpseudof<-filter(jdata2,prediction %in% c("PseudoFdors","PseudoFlat"))
+allpseudof$pred<-c("Pseudocalanus sp. female")
+
+#graphs, code for single taxa
+p1<-qplot(depth, data=allcglac4, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=3,xlim=c(315.3574,0))+coord_flip()
+p2<-qplot(depth, data=allcglac5, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=3,xlim=c(315.3574,0))+coord_flip()
+p3<-qplot(depth, data=allcglacf, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=3,xlim=c(315.3574,0))+coord_flip()
+p4<-qplot(depth, data=allchyp4, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=3,xlim=c(315.3574,0))+coord_flip()
+p5<-qplot(depth, data=allchyp5, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=3,xlim=c(315.3574,0))+coord_flip()
+p6<-qplot(depth, data=allchypf, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=3,xlim=c(315.3574,0))+coord_flip()
+p7<-qplot(depth, data=allcyctrico, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=3,xlim=c(315.3574,0))+coord_flip()
+p8<-qplot(depth, data=alleggs, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=3,xlim=c(315.3574,0))+coord_flip()
+p9<-qplot(depth, data=allmicroc, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=3,xlim=c(315.3574,0))+coord_flip()
+p10<-qplot(depth, data=allmlong4, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=3,xlim=c(315.3574,0))+coord_flip()
+p11<-qplot(depth, data=allmlong5, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=3,xlim=c(315.3574,0))+coord_flip()
+p12<-qplot(depth, data=allmlongf, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=3,xlim=c(315.3574,0))+coord_flip()
+p13<-qplot(depth, data=allnauplius, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=3,xlim=c(315.3574,0))+coord_flip()
+p14<-qplot(depth, data=alloithona, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=3,xlim=c(315.3574,0))+coord_flip()
+p15<-qplot(depth, data=allpseudo4, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=3,xlim=c(315.3574,0))+coord_flip()
+p16<-qplot(depth, data=allpseudo5, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=3,xlim=c(315.3574,0))+coord_flip()
+p17<-qplot(depth, data=allpseudof, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=3,xlim=c(315.3574,0))+coord_flip()
 
 
-#making subsets for taxa
-subset.chypIV<-subset(jdata1, pred2==31&&17&&29,select = c(prediction, depth,pred2))
+source('multiplot.R')
+multiplot(p1, p2, p3,cols=2)
+multiplot(p4, p5, p6,cols=2)
+multiplot(p7, p8, p9,cols=2)
+multiplot(p10, p11, p12,cols=2)
+multiplot(p15, p16, p17,cols=2)
+multiplot(p13, p14,cols=1)
 
 
+cglac<-as.data.frame(mapply(c, allcglac4, allcglac5, allcglacf, SIMPLIFY=FALSE))
+p18<-qplot(depth, data=cglac, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=3,xlim=c(315.3574,0))+coord_flip()
+p18
 
-#code for single taxa
-qplot(depth, data=subset.chypIV, geom="freqpoly", group=prediction, colour=prediction, position="identity", binwidth=2,xlim=c(315.3574,0))+coord_flip()
+chyp<-as.data.frame(mapply(c, allchyp4, allchyp5, allchypf, SIMPLIFY=FALSE))
+p19<-qplot(depth, data=chyp, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=3,xlim=c(315.3574,0))+coord_flip()
+p19
+
+mlong<-as.data.frame(mapply(c, allmlong4, allmlong5, allmlongf, SIMPLIFY=FALSE))
+p20<-qplot(depth, data=mlong, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=3,xlim=c(315.3574,0))+coord_flip()
+p20
+
 
 #code for all taxa in column "PREDICTION"
-qplot(Realdepth, data=jdata1, geom="freqpoly", group=PREDICTION, colour=PREDICTION, position="identity",binwidth=1,xlim=c(5,0))+coord_flip()
+qplot(depth, data=jdata2, geom="freqpoly", group=prediction, colour=prediction, position="identity",binwidth=3,xlim=c(315.3574,0))+coord_flip()
+
+
+
+pred <- group_by(jdata1_df, PREDICTION)
+pred.pos <- summarise(pred,
+                      count = n(),
+                      mean.depth = mean(Realdepth, na.rm = TRUE),
+                      mean.fluo = mean(Fluo_A, na.rm = TRUE))
+
+ggplot(pred.pos, aes(mean.fluo, mean.depth)) +
+  geom_point(aes(size = count,colour=PREDICTION), alpha = 1/2) +
+  geom_smooth() +
+  scale_size_area()
+
+ggplot(jdata1_df,aes(Fluo_A, Realdepth)) + 
+  geom_point(aes(colour=PREDICTION), alpha = 1/2) +
+  geom_smooth() +
+  scale_size_area()
