@@ -104,20 +104,24 @@ mlong<-as.data.frame(mapply(c, allmlong4, allmlong5, allmlongf, SIMPLIFY=FALSE))
 p20<-qplot(depth, data=mlong, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=3,xlim=c(315.3574,0))+coord_flip()
 p20
 
+#classes vs env factors
+qplot(depth, Fluorescence.0.20.,data=cglac, xlim=c(315.3574,0),colour=pred,geom=c("point","smooth"))+coord_flip()
+qplot(depth, salinity,data=cglac, colour=pred, xlim=c(315.3574,0),colour=pred,geom=c("point","smooth"))+coord_flip()
+qplot(depth,oxy_concentration,  data=cglac, xlim=c(315.3574,0),colour=pred,geom=c("point","smooth"))+coord_flip()
+qplot(depth,temperature.oxy.,  data=cglac, xlim=c(315.3574,0),colour=pred,geom=c("point","smooth"))+coord_flip()
+qplot(depth,oxy_saturation,  data=cglac,xlim=c(315.3574,0),colour=pred,geom=c("point","smooth"))+coord_flip()
+qplot(depth,area_mm,  data=cglac, xlim=c(315.3574,0),colour=pred,geom=c("point","smooth"))+coord_flip()
 
 #code for all taxa in column "PREDICTION"
 qplot(depth, data=jdata2, geom="freqpoly", group=prediction, colour=prediction, position="identity",binwidth=3,xlim=c(315.3574,0))+coord_flip()
 
 
-
-pred <- group_by(jdata1_df, PREDICTION)
-pred.pos <- summarise(pred,
-                      count = n(),
-                      mean.depth = mean(Realdepth, na.rm = TRUE),
-                      mean.fluo = mean(Fluo_A, na.rm = TRUE))
+#test vs environmental data?
+cglac_group <- group_by(cglac, pred)
+pred.pos <- summarise(cglac_group,count = n(), mean.depth = weighted.mean(depth, na.rm = TRUE), mean.fluo = weighted.mean(Fluorescence.0.20.,na.rm = TRUE))
 
 ggplot(pred.pos, aes(mean.fluo, mean.depth)) +
-  geom_point(aes(size = count,colour=PREDICTION), alpha = 1/2) +
+  geom_point(aes(size = count,colour=pred), alpha = 1/2) +
   geom_smooth() +
   scale_size_area()
 
