@@ -98,10 +98,15 @@ multiplot(p13, p14,cols=1)
 
 #mapply to combine all stages of species A to one table
 cglac<-as.data.frame(mapply(c, allcglac4, allcglac5, allcglacf, SIMPLIFY=FALSE))
-
 #plot all the sages in one freqpoly plot
-p18<-qplot(depth, data=cglac, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=3,xlim=c(315.3574,0))+coord_flip()
+p18<-qplot(depth, data=cglac, geom="density", group=pred, colour=pred, alpha=0.2, position="identity", binwidth=3,xlim=c(315.3574,0))+coord_flip()
 p18
+
+#bw theme
+#set_theme(theme_complete_bw)
+#plots cglac with histo and density
+cglac$pred2<-as.factor(cglac$pred)
+ggplot(cglac, aes(x=depth, fill=pred2)) + geom_bar(aes(y=..density..),binwidth=3, alpha=.5, position="stack")+geom_density(alpha=.2)+xlab("Depth (m)")+ylab("Counts & Density")+coord_flip()+ scale_x_reverse()+theme_bw()
 
 chyp<-as.data.frame(mapply(c, allchyp4, allchyp5, allchypf, SIMPLIFY=FALSE))
 p19<-qplot(depth, data=chyp, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=3,xlim=c(315.3574,0))+coord_flip()
@@ -136,7 +141,7 @@ qplot(depth,area_mm,  data=cglac, xlim=c(315.3574,0),colour=pred,geom=c("point",
 
 #test vs environmental data?
 cglac_group <- group_by(cglac, pred)
-pred.pos <- summarise(cglac_group,count = n(), mean.depth = mean(depth, na.rm = TRUE), mean.fluo = weighted.mean(Fluorescence.0.20.,na.rm = TRUE))
+pred.pos <- summarise(cglac_group,count = n(), mean.depth = mean(depth, na.rm = TRUE), mean.fluo = mean(Fluorescence.0.20.,na.rm = TRUE))
 "
 ggplot(pred.pos, aes(mean.fluo, mean.depth)) +
   geom_point(aes(size = count,colour=pred), alpha = 1/2) +
