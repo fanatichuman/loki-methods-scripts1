@@ -3,68 +3,401 @@ library(gdata)
 library(ggplot2)
 #theme,get rid of grey background
 #theme_set(theme_bw())
-data1011 <- file.path("/Volumes/HD/Users/MoritzSchmid-Takuvik/Documents/Work/Projects/LOKI_methods/R/attempt2/101a/1011RFspecweight5data.xls")
+data1011 <- file.path("/Volumes/HD/Users/MoritzSchmid-Takuvik/Documents/Work/Projects/LOKI_methods/R/attempt2/101a/combined_101_2,5,8,9_combined_w_spec_5_16_1-9.csv")
 
 # Read in XLS data and rename headers for ease of access
-jdata = read.xls(data1011, pattern="RunNo")    # Header line using pattern
+jdata = read.csv(data1011)    # Header line using pattern
 
 jdata1 <- tbl_df(jdata) #more handable table of dplyr
 
-jdata2 = jdata1[c(1:9424), c(1:4,7,38,39,41,42,43,45,46)] #which columns and rows to take
-names(jdata2) = c('runno', 'prediction' , 'length_pred','width_pred','area_mm','depth','salinity','oxy_concentration','temperature(oxy)','oxy_saturation','Fluorescence(0-200)','Fluorescence(0-20)') #header names
+jdata2 = jdata1[c(1:75420), c(1:7,10,41,42,44,45,46,48)] #which columns and rows to take
+names(jdata2) = c('overallno','runno','haul', 'prediction16' , 'prediction5', 'length_pred','width_pred','area_mm','depth','salinity','oxy_concentration','temperature(oxy)','oxy_saturation','Fluorescence_high') #header names
+
+haul1<-filter(jdata2,haul==1)
+haul2<-filter(jdata2,haul==2)
+haul5<-filter(jdata2,haul==5)
+haul8<-filter(jdata2,haul==8)
+haul9<-filter(jdata2,haul==9)
+
+#sepc16
+#HAUL1
+
 
 #combine all stage subclasses(lat/dors) to one
-allcglac4<-filter(jdata2,prediction %in% c("CglacIVdors","CglacIVlat"))
+allcglac4<-filter(haul1,prediction16 %in% c("CglacIVdors","CglacIVlat"))
 #add new column pred so they are all called the same
 allcglac4$pred<-c("Calanus glacialis stage 4")
 
-allcglac5<-filter(jdata2,prediction %in% c("CglacVdors","CglacVdorsex","CglacVlat"))
+allcglac5<-filter(haul1,prediction16 %in% c("CglacVdors","CglacVdorsex","CglacVlat"))
 allcglac5$pred<-c("Calanus glacialis stage 5")
 
-allcglacf<-filter(jdata2,prediction %in% c("CglacFdorsL","CglacFdorsS","CglacFlat"))
+allcglacf<-filter(haul1,prediction16 %in% c("CglacFdorsL","CglacFdorsS","CglacFlat"))
 allcglacf$pred<-c("Calanus glacialis female")
 
-allchyp4<-filter(jdata2,prediction %in% c("ChypIVantF_dors" ,"ChypIVdorsEX" ,"ChypIVlat"))
+allchyp4<-filter(haul1,prediction16 %in% c("ChypIVantF_dors" ,"ChypIVdorsEX" ,"ChypIVlat"))
 allchyp4$pred<-c("Calanus hyperboreus stage 4")
 
-allchyp5<-filter(jdata2,prediction %in% c("ChypVdors" ,"ChypVdorsext","ChypVlat"))
+allchyp5<-filter(haul1,prediction16 %in% c("ChypVdors" ,"ChypVdorsext","ChypVlat"))
 allchyp5$pred<-c("Calanus hyperboreus stage 5")
 
-allchypf<-filter(jdata2,prediction %in% c("ChypFdors" ,"ChypFdorsEXT","ChypFlat"))
+allchypf<-filter(haul1,prediction16 %in% c("ChypFdors" ,"ChypFdorsEXT","ChypFlat"))
 allchypf$pred<-c("Calanus hyperboreus female")
 
-allcyctrico<-filter(jdata2,prediction %in% c("CycTricoDORS" ,"CycTricoLAT","CycTricoMF"))
+allcyctrico<-filter(haul1,prediction16 %in% c("CycTricoDORS" ,"CycTricoLAT","CycTricoMF"))
 allcyctrico$pred<-c("Triconia sp.")
 
-alleggs<-filter(jdata2,prediction %in% c("Egg"))
+alleggs<-filter(haul1,prediction16 %in% c("Egg"))
 alleggs$pred<-c("Eggs")
 
-allmicroc<-filter(jdata2,prediction %in% c("MicroCdors","MicroClat"))
+allmicroc<-filter(haul1,prediction16 %in% c("MicroCdors","MicroClat"))
 allmicroc$pred<-c("Microcalanus sp.")
 
-allmlong4<-filter(jdata2,prediction %in% c("MlongaIVlat","MlongIVdors"))
+allmlong4<-filter(haul1,prediction16 %in% c("MlongaIVlat","MlongIVdors"))
 allmlong4$pred<-c("Metridia longa stage 4")
 
-allmlong5<-filter(jdata2,prediction %in% c("MlongVdors","MlongVlat"))
+allmlong5<-filter(haul1,prediction16 %in% c("MlongVdors","MlongVlat"))
 allmlong5$pred<-c("Metridia longa stage 5")
 
-allmlongf<-filter(jdata2,prediction %in% c("MlongFdors","MlongFdorsEx","MlongFlat"))
+allmlongf<-filter(haul1,prediction16 %in% c("MlongFdors","MlongFdorsEx","MlongFlat"))
 allmlongf$pred<-c("Metridia longa female")
 
-allnauplius<-filter(jdata2,prediction %in% c("Nauplius"))
+allnauplius<-filter(haul1,prediction16 %in% c("Nauplius"))
 allnauplius$pred<-c("Nauplii")
 
-alloithona<-filter(jdata2,prediction %in% c("Oithona"))
+alloithona<-filter(haul1,prediction16 %in% c("Oithona"))
 alloithona$pred<-c("Oithona sp.")
 
-allpseudo4<-filter(jdata2,prediction %in% c("PseudoIVlat"))
+allpseudo4<-filter(haul1,prediction16 %in% c("PseudoIVlat"))
 allpseudo4$pred<-c("Pseudocalanus sp. stage 4")
 
-allpseudo5<-filter(jdata2,prediction %in% c("PseudoVdors","PseudoVlat"))
+allpseudo5<-filter(haul1,prediction16 %in% c("PseudoVdors","PseudoVlat"))
 allpseudo5$pred<-c("Pseudocalanus sp. stage 5")
 
-allpseudof<-filter(jdata2,prediction %in% c("PseudoFdors","PseudoFlat"))
+allpseudof<-filter(haul1,prediction16 %in% c("PseudoFdors","PseudoFlat"))
 allpseudof$pred<-c("Pseudocalanus sp. female")
+
+
+#HAUL2
+
+
+#-------------
+
+#combine all stage subclasses(lat/dors) to one
+allcglac4<-filter(haul2,prediction16 %in% c("CglacIVdors","CglacIVlat"))
+#add new column pred so they are all called the same
+allcglac4$pred<-c("Calanus glacialis stage 4")
+
+allcglac5<-filter(haul2,prediction16 %in% c("CglacVdors","CglacVdorsex","CglacVlat"))
+allcglac5$pred<-c("Calanus glacialis stage 5")
+
+allcglacf<-filter(haul2,prediction16 %in% c("CglacFdorsL","CglacFdorsS","CglacFlat"))
+allcglacf$pred<-c("Calanus glacialis female")
+
+allchyp4<-filter(haul2,prediction16 %in% c("ChypIVantF_dors" ,"ChypIVdorsEX" ,"ChypIVlat"))
+allchyp4$pred<-c("Calanus hyperboreus stage 4")
+
+allchyp5<-filter(haul2,prediction16 %in% c("ChypVdors" ,"ChypVdorsext","ChypVlat"))
+allchyp5$pred<-c("Calanus hyperboreus stage 5")
+
+allchypf<-filter(haul2,prediction16 %in% c("ChypFdors" ,"ChypFdorsEXT","ChypFlat"))
+allchypf$pred<-c("Calanus hyperboreus female")
+
+allcyctrico<-filter(haul2,prediction16 %in% c("CycTricoDORS" ,"CycTricoLAT","CycTricoMF"))
+allcyctrico$pred<-c("Triconia sp.")
+
+alleggs<-filter(haul2,prediction16 %in% c("Egg"))
+alleggs$pred<-c("Eggs")
+
+allmicroc<-filter(haul2,prediction16 %in% c("MicroCdors","MicroClat"))
+allmicroc$pred<-c("Microcalanus sp.")
+
+allmlong4<-filter(haul2,prediction16 %in% c("MlongaIVlat","MlongIVdors"))
+allmlong4$pred<-c("Metridia longa stage 4")
+
+allmlong5<-filter(haul2,prediction16 %in% c("MlongVdors","MlongVlat"))
+allmlong5$pred<-c("Metridia longa stage 5")
+
+allmlongf<-filter(haul2,prediction16 %in% c("MlongFdors","MlongFdorsEx","MlongFlat"))
+allmlongf$pred<-c("Metridia longa female")
+
+allnauplius<-filter(haul2,prediction16 %in% c("Nauplius"))
+allnauplius$pred<-c("Nauplii")
+
+alloithona<-filter(haul2,prediction16 %in% c("Oithona"))
+alloithona$pred<-c("Oithona sp.")
+
+allpseudo4<-filter(haul2,prediction16 %in% c("PseudoIVlat"))
+allpseudo4$pred<-c("Pseudocalanus sp. stage 4")
+
+allpseudo5<-filter(haul2,prediction16 %in% c("PseudoVdors","PseudoVlat"))
+allpseudo5$pred<-c("Pseudocalanus sp. stage 5")
+
+allpseudof<-filter(haul2,prediction16 %in% c("PseudoFdors","PseudoFlat"))
+allpseudof$pred<-c("Pseudocalanus sp. female")
+
+
+#HAUL5
+#-------------
+#combine all stage subclasses(lat/dors) to one
+allcglac4<-filter(haul5,prediction16 %in% c("CglacIVdors","CglacIVlat"))
+#add new column pred so they are all called the same
+allcglac4$pred<-c("Calanus glacialis stage 4")
+
+allcglac5<-filter(haul5,prediction16 %in% c("CglacVdors","CglacVdorsex","CglacVlat"))
+allcglac5$pred<-c("Calanus glacialis stage 5")
+
+allcglacf<-filter(haul5,prediction16 %in% c("CglacFdorsL","CglacFdorsS","CglacFlat"))
+allcglacf$pred<-c("Calanus glacialis female")
+
+allchyp4<-filter(haul5,prediction16 %in% c("ChypIVantF_dors" ,"ChypIVdorsEX" ,"ChypIVlat"))
+allchyp4$pred<-c("Calanus hyperboreus stage 4")
+
+allchyp5<-filter(haul5,prediction16 %in% c("ChypVdors" ,"ChypVdorsext","ChypVlat"))
+allchyp5$pred<-c("Calanus hyperboreus stage 5")
+
+allchypf<-filter(haul5,prediction16 %in% c("ChypFdors" ,"ChypFdorsEXT","ChypFlat"))
+allchypf$pred<-c("Calanus hyperboreus female")
+
+
+
+
+
+#HAUL6
+#-------------
+#combine all stage subclasses(lat/dors) to one
+allcglac4<-filter(haul8,prediction16 %in% c("CglacIVdors","CglacIVlat"))
+#add new column pred so they are all called the same
+allcglac4$pred<-c("Calanus glacialis stage 4")
+
+allcglac5<-filter(haul8,prediction16 %in% c("CglacVdors","CglacVdorsex","CglacVlat"))
+allcglac5$pred<-c("Calanus glacialis stage 5")
+
+allcglacf<-filter(haul8,prediction16 %in% c("CglacFdorsL","CglacFdorsS","CglacFlat"))
+allcglacf$pred<-c("Calanus glacialis female")
+
+allchyp4<-filter(haul8,prediction16 %in% c("ChypIVantF_dors" ,"ChypIVdorsEX" ,"ChypIVlat"))
+allchyp4$pred<-c("Calanus hyperboreus stage 4")
+
+allchyp5<-filter(haul8,prediction16 %in% c("ChypVdors" ,"ChypVdorsext","ChypVlat"))
+allchyp5$pred<-c("Calanus hyperboreus stage 5")
+
+allchypf<-filter(haul8,prediction16 %in% c("ChypFdors" ,"ChypFdorsEXT","ChypFlat"))
+allchypf$pred<-c("Calanus hyperboreus female")
+
+
+
+
+#HAUL9
+#-------------
+#combine all stage subclasses(lat/dors) to one
+allcglac4<-filter(haul9,prediction16 %in% c("CglacIVdors","CglacIVlat"))
+#add new column pred so they are all called the same
+allcglac4$pred<-c("Calanus glacialis stage 4")
+
+allcglac5<-filter(haul9,prediction16 %in% c("CglacVdors","CglacVdorsex","CglacVlat"))
+allcglac5$pred<-c("Calanus glacialis stage 5")
+
+allcglacf<-filter(haul9,prediction16 %in% c("CglacFdorsL","CglacFdorsS","CglacFlat"))
+allcglacf$pred<-c("Calanus glacialis female")
+
+allchyp4<-filter(haul9,prediction16 %in% c("ChypIVantF_dors" ,"ChypIVdorsEX" ,"ChypIVlat"))
+allchyp4$pred<-c("Calanus hyperboreus stage 4")
+
+allchyp5<-filter(haul9,prediction16 %in% c("ChypVdors" ,"ChypVdorsext","ChypVlat"))
+allchyp5$pred<-c("Calanus hyperboreus stage 5")
+
+allchypf<-filter(haul9,prediction16 %in% c("ChypFdors" ,"ChypFdorsEXT","ChypFlat"))
+allchypf$pred<-c("Calanus hyperboreus female")
+
+#spec5
+#HAUL1
+
+
+#combine all stage subclasses(lat/dors) to one
+allcglac4<-filter(haul1,prediction5 %in% c("CglacIVdors","CglacIVlat"))
+#add new column pred so they are all called the same
+allcglac4$pred<-c("Calanus glacialis stage 4")
+
+allcglac5<-filter(haul1,prediction5 %in% c("CglacVdors","CglacVdorsex","CglacVlat"))
+allcglac5$pred<-c("Calanus glacialis stage 5")
+
+allcglacf<-filter(haul1,prediction5 %in% c("CglacFdorsL","CglacFdorsS","CglacFlat"))
+allcglacf$pred<-c("Calanus glacialis female")
+
+allchyp4<-filter(haul1,prediction5 %in% c("ChypIVantF_dors" ,"ChypIVdorsEX" ,"ChypIVlat"))
+allchyp4$pred<-c("Calanus hyperboreus stage 4")
+
+allchyp5<-filter(haul1,prediction5 %in% c("ChypVdors" ,"ChypVdorsext","ChypVlat"))
+allchyp5$pred<-c("Calanus hyperboreus stage 5")
+
+allchypf<-filter(haul1,prediction5 %in% c("ChypFdors" ,"ChypFdorsEXT","ChypFlat"))
+allchypf$pred<-c("Calanus hyperboreus female")
+
+allcyctrico<-filter(haul1,prediction5 %in% c("CycTricoDORS" ,"CycTricoLAT","CycTricoMF"))
+allcyctrico$pred<-c("Triconia sp.")
+
+alleggs<-filter(haul1,prediction5 %in% c("Egg"))
+alleggs$pred<-c("Eggs")
+
+allmicroc<-filter(haul1,prediction5 %in% c("MicroCdors","MicroClat"))
+allmicroc$pred<-c("Microcalanus sp.")
+
+allmlong4<-filter(haul1,prediction5 %in% c("MlongaIVlat","MlongIVdors"))
+allmlong4$pred<-c("Metridia longa stage 4")
+
+allmlong5<-filter(haul1,prediction5 %in% c("MlongVdors","MlongVlat"))
+allmlong5$pred<-c("Metridia longa stage 5")
+
+allmlongf<-filter(haul1,prediction5 %in% c("MlongFdors","MlongFdorsEx","MlongFlat"))
+allmlongf$pred<-c("Metridia longa female")
+
+allnauplius<-filter(haul1,prediction5 %in% c("Nauplius"))
+allnauplius$pred<-c("Nauplii")
+
+alloithona<-filter(haul1,prediction5 %in% c("Oithona"))
+alloithona$pred<-c("Oithona sp.")
+
+allpseudo4<-filter(haul1,prediction5 %in% c("PseudoIVlat"))
+allpseudo4$pred<-c("Pseudocalanus sp. stage 4")
+
+allpseudo5<-filter(haul1,prediction5 %in% c("PseudoVdors","PseudoVlat"))
+allpseudo5$pred<-c("Pseudocalanus sp. stage 5")
+
+allpseudof<-filter(haul1,prediction5 %in% c("PseudoFdors","PseudoFlat"))
+allpseudof$pred<-c("Pseudocalanus sp. female")
+
+
+#HAUL2
+
+
+#-------------
+
+#combine all stage subclasses(lat/dors) to one
+allcglac4<-filter(haul2,prediction5 %in% c("CglacIVdors","CglacIVlat"))
+#add new column pred so they are all called the same
+allcglac4$pred<-c("Calanus glacialis stage 4")
+
+allcglac5<-filter(haul2,prediction5 %in% c("CglacVdors","CglacVdorsex","CglacVlat"))
+allcglac5$pred<-c("Calanus glacialis stage 5")
+
+allcglacf<-filter(haul2,prediction5 %in% c("CglacFdorsL","CglacFdorsS","CglacFlat"))
+allcglacf$pred<-c("Calanus glacialis female")
+
+allchyp4<-filter(haul2,prediction5 %in% c("ChypIVantF_dors" ,"ChypIVdorsEX" ,"ChypIVlat"))
+allchyp4$pred<-c("Calanus hyperboreus stage 4")
+
+allchyp5<-filter(haul2,prediction5 %in% c("ChypVdors" ,"ChypVdorsext","ChypVlat"))
+allchyp5$pred<-c("Calanus hyperboreus stage 5")
+
+allchypf<-filter(haul2,prediction5 %in% c("ChypFdors" ,"ChypFdorsEXT","ChypFlat"))
+allchypf$pred<-c("Calanus hyperboreus female")
+
+allcyctrico<-filter(haul2,prediction5 %in% c("CycTricoDORS" ,"CycTricoLAT","CycTricoMF"))
+allcyctrico$pred<-c("Triconia sp.")
+
+alleggs<-filter(haul2,prediction5 %in% c("Egg"))
+alleggs$pred<-c("Eggs")
+
+allmicroc<-filter(haul2,prediction5 %in% c("MicroCdors","MicroClat"))
+allmicroc$pred<-c("Microcalanus sp.")
+
+allmlong4<-filter(haul2,prediction5 %in% c("MlongaIVlat","MlongIVdors"))
+allmlong4$pred<-c("Metridia longa stage 4")
+
+allmlong5<-filter(haul2,prediction5 %in% c("MlongVdors","MlongVlat"))
+allmlong5$pred<-c("Metridia longa stage 5")
+
+allmlongf<-filter(haul2,prediction5 %in% c("MlongFdors","MlongFdorsEx","MlongFlat"))
+allmlongf$pred<-c("Metridia longa female")
+
+allnauplius<-filter(haul2,prediction5 %in% c("Nauplius"))
+allnauplius$pred<-c("Nauplii")
+
+alloithona<-filter(haul2,prediction5 %in% c("Oithona"))
+alloithona$pred<-c("Oithona sp.")
+
+allpseudo4<-filter(haul2,prediction5 %in% c("PseudoIVlat"))
+allpseudo4$pred<-c("Pseudocalanus sp. stage 4")
+
+allpseudo5<-filter(haul2,prediction5 %in% c("PseudoVdors","PseudoVlat"))
+allpseudo5$pred<-c("Pseudocalanus sp. stage 5")
+
+allpseudof<-filter(haul2,prediction5 %in% c("PseudoFdors","PseudoFlat"))
+allpseudof$pred<-c("Pseudocalanus sp. female")
+
+
+#HAUL3
+#-------------
+#combine all stage subclasses(lat/dors) to one
+allcglac4<-filter(haul5,prediction5 %in% c("CglacIVdors","CglacIVlat"))
+#add new column pred so they are all called the same
+allcglac4$pred<-c("Calanus glacialis stage 4")
+
+allcglac5<-filter(haul5,prediction5 %in% c("CglacVdors","CglacVdorsex","CglacVlat"))
+allcglac5$pred<-c("Calanus glacialis stage 5")
+
+allcglacf<-filter(haul5,prediction5 %in% c("CglacFdorsL","CglacFdorsS","CglacFlat"))
+allcglacf$pred<-c("Calanus glacialis female")
+
+allchyp4<-filter(haul5,prediction5 %in% c("ChypIVantF_dors" ,"ChypIVdorsEX" ,"ChypIVlat"))
+allchyp4$pred<-c("Calanus hyperboreus stage 4")
+
+allchyp5<-filter(haul5,prediction5 %in% c("ChypVdors" ,"ChypVdorsext","ChypVlat"))
+allchyp5$pred<-c("Calanus hyperboreus stage 5")
+
+allchypf<-filter(haul5,prediction5 %in% c("ChypFdors" ,"ChypFdorsEXT","ChypFlat"))
+allchypf$pred<-c("Calanus hyperboreus female")
+
+
+
+
+
+#HAUL6
+#-------------
+#combine all stage subclasses(lat/dors) to one
+allcglac4<-filter(haul8,prediction5 %in% c("CglacIVdors","CglacIVlat"))
+#add new column pred so they are all called the same
+allcglac4$pred<-c("Calanus glacialis stage 4")
+
+allcglac5<-filter(haul8,prediction5 %in% c("CglacVdors","CglacVdorsex","CglacVlat"))
+allcglac5$pred<-c("Calanus glacialis stage 5")
+
+allcglacf<-filter(haul8,prediction5 %in% c("CglacFdorsL","CglacFdorsS","CglacFlat"))
+allcglacf$pred<-c("Calanus glacialis female")
+
+allchyp4<-filter(haul8,prediction5 %in% c("ChypIVantF_dors" ,"ChypIVdorsEX" ,"ChypIVlat"))
+allchyp4$pred<-c("Calanus hyperboreus stage 4")
+
+allchyp5<-filter(haul8,prediction5 %in% c("ChypVdors" ,"ChypVdorsext","ChypVlat"))
+allchyp5$pred<-c("Calanus hyperboreus stage 5")
+
+allchypf<-filter(haul8,prediction5 %in% c("ChypFdors" ,"ChypFdorsEXT","ChypFlat"))
+allchypf$pred<-c("Calanus hyperboreus female")
+
+
+
+
+#HAUL9
+#-------------
+#combine all stage subclasses(lat/dors) to one
+allcglac4<-filter(haul9,prediction5 %in% c("CglacIVdors","CglacIVlat"))
+#add new column pred so they are all called the same
+allcglac4$pred<-c("Calanus glacialis stage 4")
+
+allcglac5<-filter(haul9,prediction5 %in% c("CglacVdors","CglacVdorsex","CglacVlat"))
+allcglac5$pred<-c("Calanus glacialis stage 5")
+
+allcglacf<-filter(haul9,prediction5 %in% c("CglacFdorsL","CglacFdorsS","CglacFlat"))
+allcglacf$pred<-c("Calanus glacialis female")
+
+allchyp4<-filter(haul9,prediction5 %in% c("ChypIVantF_dors" ,"ChypIVdorsEX" ,"ChypIVlat"))
+allchyp4$pred<-c("Calanus hyperboreus stage 4")
+
+allchyp5<-filter(haul9,prediction5 %in% c("ChypVdors" ,"ChypVdorsext","ChypVlat"))
+allchyp5$pred<-c("Calanus hyperboreus stage 5")
+
+allchypf<-filter(haul9,prediction5 %in% c("ChypFdors" ,"ChypFdorsEXT","ChypFlat"))
+allchypf$pred<-c("Calanus hyperboreus female")
 
 
 #plot all those species/stage combinations
