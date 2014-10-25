@@ -273,19 +273,19 @@ p23<-qplot(depth, data=tricomlong.c, geom="freqpoly", group=pred, colour=pred,po
 p23
 
 
-
-)#plot classes vs env factors and add smooth line
+"
+#plot classes vs env factors and add smooth line
 qplot(depth, Fluorescence.0.20.,data=cglac, xlim=c(315.3574,0),colour=pred,geom=c("point","smooth"))+coord_flip()
 qplot(depth, salinity,data=cglac, colour=pred, xlim=c(315.3574,0),colour=pred,geom=c("point","smooth"))+coord_flip()
 qplot(depth,oxy_concentration,  data=cglac, xlim=c(315.3574,0),colour=pred,geom=c("point","smooth"))+coord_flip()
 qplot(depth,temperature.oxy.,  data=cglac, xlim=c(315.3574,0),colour=pred,geom=c("point","smooth"))+coord_flip()
 qplot(depth,oxy_saturation,  data=cglac,xlim=c(315.3574,0),colour=pred,geom=c("point","smooth"))+coord_flip()
-qplot(depth,area_mm,  data=cglac, xlim=c(315.3574,0),colour=pred,geom=c("point","smooth"))+coord_flip()
+qplot(depth,area_mm,  data=cglac, xlim=c(315.3574,0),colour=pred,geom=c("point","smooth"))+coord_flip()"
 
 
 #test vs environmental data?
-cglac_group <- group_by(cglac, pred)
-pred.pos <- summarise(cglac_group,count = n(), mean.depth = mean(depth, na.rm = TRUE), mean.fluo = mean(Fluorescence.0.20.,na.rm = TRUE))
+#cglac_group <- group_by(cglac, pred)
+#pred.pos <- summarise(cglac_group,count = n(), mean.depth = mean(depth, na.rm = TRUE), mean.fluo = mean(Fluorescence.0.20.,na.rm = TRUE))
 "
 ggplot(pred.pos, aes(mean.fluo, mean.depth)) +
   geom_point(aes(size = count,colour=pred), alpha = 1/2) +
