@@ -259,16 +259,16 @@ allmlongfh9$pred<-c("Metridia longa female")
 #mapply to combine all stages of species A to one table
 cglach1<-as.data.frame(mapply(c, allcglac3h1, allcglac4h1, allcglac5h1, allcglacfh1, SIMPLIFY=FALSE))
 #plot all the sages in one freqpoly plot
-p18h1<-qplot(depth, data=cglach1, geom="freqpoly", group=pred, position="identity", binwidth=1,xlim=c(315.3574,0))+coord_flip()
-p18h1
+p18h1<-qplot(depth, data=cglach1, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=1,xlim=c(315.3574,0),ylim=c(0,55))+coord_flip()+ theme(legend.position = "none")+labs(title = "Calanus glacialis t0")+ labs(x = "Depth (m)")+ labs(y = "Count of individuals (n)")
+#p18h1
 
 chyph1<-as.data.frame(mapply(c, allchyp3h1,allchyp4h1, allchyp5h1, allchypfh1, SIMPLIFY=FALSE))
-p19h1<-qplot(depth, data=chyph1, geom="freqpoly", group=pred, position="identity", binwidth=1,xlim=c(315.3574,0))+coord_flip()
-p19h1
+p19h1<-qplot(depth, data=chyph1, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=1,xlim=c(315.3574,0),ylim=c(0,70))+coord_flip()+ theme(legend.position = "none")+labs(title = "Calanus hyperboreus t0")+ labs(x = "Depth (m)")+ labs(y = "Count of individuals (n)")
+#p19h1
 
 mlongh1<-as.data.frame(mapply(c, allmlong3h1,allmlong4h1, allmlong5h1, allmlongfh1, SIMPLIFY=FALSE))
-p20h1<-qplot(depth, data=mlongh1, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=1,xlim=c(315.3574,0))+coord_flip()
-p20h1
+p20h1<-qplot(depth, data=mlongh1, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=1,xlim=c(315.3574,0),ylim=c(0,35))+coord_flip()+ theme(legend.position = "none")+labs(title = "Metridia longa t0")+ labs(x = "Depth (m)")+ labs(y = "Count of individuals (n)")
+#p20h1
 
 
 #haul2
@@ -276,16 +276,16 @@ p20h1
 #mapply to combine all stages of species A to one table
 cglach2<-as.data.frame(mapply(c, allcglac3h2, allcglac4h2, allcglac5h2, allcglacfh2, SIMPLIFY=FALSE))
 #plot all the sages in one freqpoly plot
-p18h2<-qplot(depth, data=cglach2, geom="freqpoly", group=pred, position="identity", binwidth=1,xlim=c(315.3574,0))+coord_flip()
-p18h2
+p18h2<-qplot(depth, data=cglach2, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=1,xlim=c(323.6896,0),ylim=c(0,55))+coord_flip()+ theme(legend.position = "none")+labs(title = "Calanus glacialis t1")+ labs(x = "Depth (m)")+ labs(y = "Count of individuals (n)")
+#p18h2
 
 chyph2<-as.data.frame(mapply(c, allchyp3h2,allchyp4h2, allchyp5h2, allchypfh2, SIMPLIFY=FALSE))
-p19h2<-qplot(depth, data=chyph2, geom="freqpoly", group=pred, position="identity", binwidth=1,xlim=c(315.3574,0))+coord_flip()
-p19h2
+p19h2<-qplot(depth, data=chyph2, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=1,xlim=c(323.6896,0),ylim=c(0,70))+coord_flip()+ theme(legend.position = "none")+labs(title = "Calanus hyperboreus t1")+ labs(x = "Depth (m)")+ labs(y = "Count of individuals (n)")
+#p19h2
 
 mlongh2<-as.data.frame(mapply(c, allmlong3h2,allmlong4h2, allmlong5h2, allmlongfh2, SIMPLIFY=FALSE))
-p20h2<-qplot(depth, data=mlongh2, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=1,xlim=c(315.3574,0))+coord_flip()
-p20h2
+p20h2<-qplot(depth, data=mlongh2, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=1,xlim=c(323.6896,0),ylim=c(0,35))+coord_flip()+ theme(legend.position = "none")+labs(title = "Metridia longa t1")+ labs(x = "Depth (m)")+ labs(y = "Count of individuals (n)")
+#p20h2
 
 
 #haul5
@@ -293,16 +293,16 @@ p20h2
 #mapply to combine all stages of species A to one table
 cglach5<-as.data.frame(mapply(c, allcglac3h5, allcglac4h5, allcglac5h5, allcglacfh5, SIMPLIFY=FALSE))
 #plot all the sages in one freqpoly plot
-p18h5<-qplot(depth, data=cglach5, geom="freqpoly", group=pred, position="identity", binwidth=1,xlim=c(315.3574,0))+coord_flip()
-p18h5
+p18h5<-qplot(depth, data=cglach5, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=1,xlim=c(344.9678,0),ylim=c(0,55))+coord_flip()+ theme(legend.position = "none")+labs(title = "Calanus glacialis t2")+ labs(x = "Depth (m)")+ labs(y = "Count of individuals (n)")
+#p18h5
 
 chyph5<-as.data.frame(mapply(c, allchyp3h5,allchyp4h5, allchyp5h5, allchypfh5, SIMPLIFY=FALSE))
-p19h5<-qplot(depth, data=chyph5, geom="freqpoly", group=pred, position="identity", binwidth=1,xlim=c(315.3574,0))+coord_flip()
-p19h5
+p19h5<-qplot(depth, data=chyph5, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=1,xlim=c(344.9678,0),ylim=c(0,70))+coord_flip()+ theme(legend.position = "none")+labs(title = "Calanus hyperboreus t2")+ labs(x = "Depth (m)")+ labs(y = "Count of individuals (n)")
+#p19h5
 
 mlongh5<-as.data.frame(mapply(c, allmlong3h5,allmlong4h5, allmlong5h5, allmlongfh5, SIMPLIFY=FALSE))
-p20h5<-qplot(depth, data=mlongh5, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=1,xlim=c(315.3574,0))+coord_flip()
-p20h5
+p20h5<-qplot(depth, data=mlongh5, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=1,xlim=c(344.9678,0),ylim=c(0,35))+coord_flip()+ theme(legend.position = "none")+labs(title = "Metridia longa t2")+ labs(x = "Depth (m)")+ labs(y = "Count of individuals (n)")
+#p20h5
 
 
 
@@ -312,16 +312,16 @@ p20h5
 #mapply to combine all stages of species A to one table
 cglach8<-as.data.frame(mapply(c, allcglac3h8, allcglac4h8, allcglac5h8, allcglacfh8, SIMPLIFY=FALSE))
 #plot all the sages in one freqpoly plot
-p18h8<-qplot(depth, data=cglach8, geom="freqpoly", group=pred, position="identity", binwidth=1,xlim=c(315.3574,0))+coord_flip()
-p18h8
+p18h8<-qplot(depth, data=cglach8, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=1,xlim=c(238.7503,0),ylim=c(0,55))+coord_flip()+ theme(legend.position = "none")+labs(title = "Calanus glacialis t3")+ labs(x = "Depth (m)")+ labs(y = "Count of individuals (n)")
+#p18h8
 
 chyph8<-as.data.frame(mapply(c, allchyp3h8,allchyp4h8, allchyp5h8, allchypfh8, SIMPLIFY=FALSE))
-p19h8<-qplot(depth, data=chyph8, geom="freqpoly", group=pred, position="identity", binwidth=1,xlim=c(315.3574,0))+coord_flip()
-p19h8
+p19h8<-qplot(depth, data=chyph8, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=1,xlim=c(238.7503,0),ylim=c(0,70))+coord_flip()+ theme(legend.position = "none")+labs(title = "Calanus hyperboreus t3")+ labs(x = "Depth (m)")+ labs(y = "Count of individuals (n)")
+#p19h8
 
 mlongh8<-as.data.frame(mapply(c, allmlong3h8,allmlong4h8, allmlong5h8, allmlongfh8, SIMPLIFY=FALSE))
-p20h8<-qplot(depth, data=mlongh8, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=1,xlim=c(315.3574,0))+coord_flip()
-p20h8
+p20h8<-qplot(depth, data=mlongh8, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=1,xlim=c(238.7503,0),ylim=c(0,35))+coord_flip()+ theme(legend.position = "none")+labs(title = "Metridia longa t3")+ labs(x = "Depth (m)")+ labs(y = "Count of individuals (n)")
+#p20h8
 
 
 
@@ -331,16 +331,16 @@ p20h8
 #mapply to combine all stages of species A to one table
 cglach9<-as.data.frame(mapply(c, allcglac3h9, allcglac4h9, allcglac5h9, allcglacfh9, SIMPLIFY=FALSE))
 #plot all the sages in one freqpoly plot
-p18h9<-qplot(depth, data=cglach9, geom="freqpoly", group=pred, position="identity", binwidth=1,xlim=c(315.3574,0))+coord_flip()
-p18h9
+p18h9<-qplot(depth, data=cglach9, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=1,xlim=c(265.7695,0),ylim=c(0,55))+coord_flip()+ theme(legend.position = "none")+labs(title = "Calanus glacialis t4")+ labs(x = "Depth (m)")+ labs(y = "Count of individuals (n)")
+#p18h9
 
 chyph9<-as.data.frame(mapply(c, allchyp3h9,allchyp4h9, allchyp5h9, allchypfh9, SIMPLIFY=FALSE))
-p19h9<-qplot(depth, data=chyph9, geom="freqpoly", group=pred, position="identity", binwidth=1,xlim=c(315.3574,0))+coord_flip()
-p19h9
+p19h9<-qplot(depth, data=chyph9, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=1,xlim=c(265.7695,0),ylim=c(0,70),ylim=c(0,70))+coord_flip()+ theme(legend.position = "none")+labs(title = "Calanus hyperboreus t4")+ labs(x = "Depth (m)")+ labs(y = "Count of individuals (n)")
+#p19h9
 
 mlongh9<-as.data.frame(mapply(c, allmlong3h9,allmlong4h9, allmlong5h9, allmlongfh9, SIMPLIFY=FALSE))
-p20h9<-qplot(depth, data=mlongh9, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=1,xlim=c(315.3574,0))+coord_flip()
-p20h9
+p20h9<-qplot(depth, data=mlongh9, geom="freqpoly", group=pred, colour=pred, position="identity", binwidth=1,xlim=c(265.7695,0),ylim=c(0,35))+coord_flip()+ theme(legend.position = "none")+labs(title = "Metridia longa t4")+ labs(x = "Depth (m)")+ labs(y = "Count of individuals (n)")
+#p20h9
 
 #bw theme
 theme_set(theme_bw())
